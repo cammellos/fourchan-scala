@@ -21,6 +21,8 @@ object FourchanBuild extends Build {
       version := Version,
       scalaVersion := ScalaVersion,
       resolvers += Classpaths.typesafeReleases,
+
+      resolvers += "Sonatype OSS Releases" at "https://oss.sonatype.org/content/repositories/releases/",
       libraryDependencies ++= Seq(
         "org.scalatra" %% "scalatra" % ScalatraVersion,
         "org.scalatra" %% "scalatra-scalate" % ScalatraVersion,
@@ -28,6 +30,7 @@ object FourchanBuild extends Build {
         "ch.qos.logback" % "logback-classic" % "1.0.6" % "runtime",
         "net.databinder.dispatch" %% "dispatch-core" % "0.11.0",
         "net.databinder.dispatch" %% "dispatch-json4s-jackson" % "0.11.0",
+        "com.livestream" %% "scredis" % "1.1.1",
         "org.json4s" %% "json4s-jackson" % "3.2.8",
         "org.eclipse.jetty" % "jetty-webapp" % "8.1.8.v20121106" % "container",
         "org.eclipse.jetty.orbit" % "javax.servlet" % "3.0.0.v201112011016" % "container;provided;test" artifacts (Artifact("javax.servlet", "jar", "jar"))

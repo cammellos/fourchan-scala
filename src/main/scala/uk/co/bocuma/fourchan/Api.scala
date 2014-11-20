@@ -23,6 +23,7 @@ class Api {
     (json \ field).extract[Int]
   }
 
+
   def extractString(json: JValue,field: String): String = {
     (json \ field).extract[String]
   }
@@ -34,10 +35,15 @@ class Api {
   def threadJsonToThread(threadJson: JValue): Thread = {
     var s = new Stats(this.extractInt(threadJson, "replies"), this.extractInt(threadJson, "images"))
     var b = new Board("b")
-    var d = new Dimensions(this.extractInt(threadJson, "w"), this.extractInt(threadJson, "h"))
-    var i = new Image(this.extractString(threadJson, "filename"), this.extractString(threadJson, "tim"), this.extractString(threadJson, "ext"), this.extractString(threadJson ,"md5"), d, b)
+    var i:Option[Image] = None
+
+    if ((threadJson \ "filename") != JNothing)  {
+      var d = new Dimensions(this.extractInt(threadJson, "w"), this.extractInt(threadJson, "h"))
+      i = Some(new Image(this.extractString(threadJson, "filename"), this.extractString(threadJson, "tim"), this.extractString(threadJson, "ext"), this.extractString(threadJson ,"md5"), d, b))
+    }
+    
     //var p = new Post(this.extractInt(threadJson, "no"),this.extractString(threadJson, "name"), this.extractInt(threadJson, "resto"), this.extractInt(threadJson, "time"), this.extractString(threadJson, "com"),Some(i))
-    var p = new Post(this.extractInt(threadJson, "no"),this.extractString(threadJson, "name"), this.extractInt(threadJson, "resto"), this.extractInt(threadJson, "time"), "c",Some(i))
+    var p = new Post(this.extractInt(threadJson, "no"),this.extractString(threadJson, "name"), this.extractInt(threadJson, "resto"), this.extractInt(threadJson, "time"), "c",i)
     new Thread(p,s,b)
   }
 
